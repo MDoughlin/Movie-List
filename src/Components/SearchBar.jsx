@@ -1,16 +1,15 @@
+import React from "react";
 
-import React, { useState } from "react";
 
-
-const Searchbar = () => {
-
-  const [searchInput, setSearchInput] = useState("");
+const Searchbar = (props) => {
   return (
     <>
       <div className="text-center mt-4 mb-4">
         <input
           type="text"
           placeholder="Movie Title"
+          value={props.value}
+          onChange={(event) => props.setSearchValue(event.target.value)}
         />
         <button type="submit">Search</button>
       </div>
