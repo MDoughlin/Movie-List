@@ -8,9 +8,6 @@ function Navigation() {
           <Nav.Link href="/home">Home</Nav.Link>
         </Nav.Item>
         <Nav.Item>
-          <Nav.Link eventKey="link-1">Watch List </Nav.Link>
-        </Nav.Item>
-        <Nav.Item>
           <Nav.Link eventKey="link-2">Favorites</Nav.Link>
         </Nav.Item>
 

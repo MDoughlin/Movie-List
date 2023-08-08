@@ -1,8 +1,16 @@
 import React, { useState, useEffect } from "react";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./App.css";
 import Navigation from "./Navigation";
 import SearchBar from "./Components/SearchBar";
 import Heading from "./Components/Heading";
 import ResultList from "./Components/ResultList";
+import { Row } from "react-bootstrap";
+import AddFavorite from "./Components/AddFavorite";
+import FavoriteList from "./Components/Pages/FavoriteList";
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+
+
 
 
 const App = () => {
@@ -27,14 +35,23 @@ const App = () => {
 
   return (
     <>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/">
+            <Route path="/favorites" element={<FavoriteList />}></Route>
+          </Route>
+        </Routes>
+      </BrowserRouter>
       <Navigation />
 
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
-      <Heading heading='Movies' />
+      <div>
+        <Heading heading='Movies' />
+      </div>
       <div className="container-fluid">
-        <div className="row">
-          <ResultList movies={movies} />
-        </div>
+        <Row md={5}>
+          <ResultList movies={movies} favoriteComponent={AddFavorite} />
+        </Row>
       </div>
     </>
   );
