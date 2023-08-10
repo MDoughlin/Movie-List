@@ -7,15 +7,13 @@ import Heading from "./Components/Heading";
 import ResultList from "./Components/ResultList";
 import { Row } from "react-bootstrap";
 import AddFavorite from "./Components/AddFavorite";
-import FavoriteList from "./Components/Pages/FavoriteList";
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-
-
+import RemoveFavorite from "./Components/RemoveFavorite";
 
 
 const App = () => {
 
   const [movies, setMovies] = useState([]);
+  const [favorites, setFavorites] = useState([]);
   const [searchValue, setSearchValue] = useState('');
 
   const fetchData = async (searchValue) => {
@@ -33,25 +31,40 @@ const App = () => {
     fetchData(searchValue);
   }, [searchValue]);
 
+  const saveToLocalStorage = (items) => {
+    localStorage.setItem('react-movie-app-favorites', JSON.stringify(items));
+  };
+
+  const addFavoriteMovie = (movie) => {
+    const newFavoriteList = [...favorites, movie];
+    setFavorites(newFavoriteList);
+    saveToLocalStorage(newFavoriteList);
+  };
+
+  const removeFavorite = (movie) => {
+    const newFavoriteList = favorites.filter((favorite) => favorite.imdbID !== movie.imdbID);
+
+    setFavorites(newFavoriteList);
+  };
+
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/">
-            <Route path="/favorites" element={<FavoriteList />}></Route>
-          </Route>
-        </Routes>
-      </BrowserRouter>
       <Navigation />
 
       <SearchBar searchValue={searchValue} setSearchValue={setSearchValue} />
       <div>
         <Heading heading='Movies' />
       </div>
-      <div className="container-fluid">
-        <Row md={5}>
-          <ResultList movies={movies} favoriteComponent={AddFavorite} />
-        </Row>
+      <div className="container-fluid movie-app">
+        <div className="row">
+          <ResultList movies={movies} handleFavoritesClick={addFavoriteMovie} favoriteComponent={AddFavorite} />
+        </div>
+        <div className='row d-flex align-items-center mt-4 mb-4'>
+          <Heading heading="Favorites" />
+        </div>
+        <div className="row">
+          <ResultList movies={favorites} handleFavoritesClick={removeFavorite} favoriteComponent={RemoveFavorite} />
+        </div>
       </div>
     </>
   );

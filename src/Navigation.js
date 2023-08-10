@@ -1,5 +1,6 @@
 import Nav from 'react-bootstrap/Nav';
-
+import React from 'react';
+import { Outlet } from 'react-router-dom';
 function Navigation() {
   return (
     <>
@@ -7,11 +8,6 @@ function Navigation() {
         <Nav.Item>
           <Nav.Link href="/home">Home</Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="link-2">Favorites</Nav.Link>
-        </Nav.Item>
-
-
       </Nav>
     </>
   );
